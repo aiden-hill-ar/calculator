@@ -42,7 +42,6 @@ body {
 .squiggly-line {
     height: 100px;
     max-width: 2000px;
-    margin-inline: auto;
     background-image: url("./svg/squiggly-line.svg");
     background-size: auto 100px;
     background-repeat: no-repeat;
@@ -50,7 +49,6 @@ body {
 section.main {
     display: flex;
     justify-content: center;
-    height: 1000px;
     background-color: hsl(192 70% 15% / 0.8);
 }
 
@@ -60,9 +58,9 @@ section.main {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px 0;
     height: fit-content;
     width: 500px;
+    margin-bottom: 20px;
 }
 
 .screen,
@@ -77,14 +75,133 @@ section.main {
     border: 3px solid hsl(23 80% 48%);
     border-radius: 30px;
 }
+.screen::before,
+.buttons::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 2px;
+    left: 2px;
+    background: none;
+    border: 3px solid hsl(23 10% 10%);
+    border-radius: 30px;
+    pointer-events: none;
+}
+.screen::before {
+    border-top-left-radius: 10px;
+}
 
+/* ---------------------------------- frame --------------------------------- */
+.frame {
+    display: flex;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+    background-color: hsl(24 10% 50% / 0.9);
+    box-shadow: 
+        0.6px 0.2px 0.6px hsl(24 10% 20% / 0.44) inset,
+        1.5px 0.6px 1.6px -1.2px hsl(24 10% 20% / 0.37) inset,
+        4.2px 1.6px 4.3px -2.4px hsl(24 10% 20% / 0.31) inset,
+        10.9px 4.3px 11.3px -3.5px hsl(24 10% 20% / 0.24) inset,
+        -0.6px 0.2px 0.6px hsl(24 10% 20% / 0.44) inset,
+        -1.5px 0.6px 1.6px -1.2px hsl(24 10% 20% / 0.37) inset,
+        -4.2px 1.6px 4.3px -2.4px hsl(24 10% 20% / 0.31) inset,
+        -10.9px 4.3px 11.3px -3.5px hsl(24 10% 20% / 0.24) inset,
+        0.2px 0.5px 0.7px hsl(24 10% 20% / 0.39),
+        2.4px 7.1px 9.3px -0.4px hsl(24 10% 20% / 0.48),
+        5.3px 15.8px 20.6px -0.9px hsl(24 10% 20% / 0.56),
+        10.9px 32.4px 42.3px -1.3px hsl(24 10% 20% / 0.64),
+        21px 62.6px 81.7px -1.7px hsl(24 10% 20% / 0.73);
+}
+
+.frame.top {
+    margin-bottom: -5px;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 10px;
+}
+.frame.bottom {
+    margin-top: -5px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.hinge {
+    height: 10px;
+    margin: 5px 0;
+    padding: 0;
+    background-color: hsl(24 10% 40% / 0.9);
+    border-top: 1px solid hsl(24 10% 30% / 0.9);
+    border-bottom: 1px solid hsl(24 10% 30%);
+    box-shadow:
+        1px 3px 2px 1px hsla(24, 10%, 20%, 0.3) inset;
+}
 /* --------------------------------- screen --------------------------------- */
 
 .screen {
+    position: relative;
+    border-top-left-radius: 10px;
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 2px,
+        hsl(107 100% 43% / 0.025) 3px
+    ), radial-gradient(
+        ellipse at center,
+        hsl(107 100% 20% / 0.1),
+        transparent 70%
+    ),
+    hsl(23 10% 1%);
     box-shadow: 
+        0.5px -0.5px 0.8px hsl(107 100% 38%  / 0.1) inset,
+        1.6px -1.6px 2.5px -0.8px hsl(107 100% 38%  / 0.1) inset,
+        4.1px -4.1px 6.5px -1.7px hsl(107 100% 38%  / 0.1) inset,
+        10px -10px 15.9px -2.5px hsl(107 100% 38%  / 0.1) inset,
+        -0.5px 0.5px 0.8px hsl(107 100% 38%  / 0.1) inset,
+        -1.6px 1.6px 2.5px -0.8px hsl(107 100% 38%  / 0.1) inset,
+        -4.1px 4.1px 6.5px -1.7px hsl(107 100% 38%  / 0.1) inset,
+        -10px 10px 15.9px -2.5px hsl(107 100% 38%  / 0.1) inset,
+
         0.2px -0.5px 0.7px hsl(23 60% 28% / 0.37),
         1px -3px 3.9px -0.9px hsl(23 60% 28% / 0.48),
-        3.4px -10.7px 13.9px -1.7px hsl(23 60% 28% / 0.58);
+        3.4px -10.7px 13.9px -1.7px hsl(23 60% 28% / 0.58),
+        
+        0.2px 0.5px 0.7px hsl(23 60% 28% / 0.37),
+        1px 3px 3.9px -0.9px hsl(23 60% 28% / 0.48),
+        3.4px 10.7px 13.9px -1.7px hsl(23 60% 28% / 0.58);
+}
+.screen p.os,
+.screen p.starting {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+    filter: blur(0.5px);
+    animation: os 50ms infinite;
+    color: hsl(107 100% 43% / 0.3);
+    text-shadow:
+        1px 3px 3px hsl(107 100% 38% / 0.2),
+        2px 6px 6px hsl(107 100% 28% / 0.1);
+    cursor: pointer;
+}
+.screen p.starting {
+    animation: os 50ms;
+    animation-iteration-count: 50;
+}
+.screen p.hidden {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+    filter: blur(0.5px);
+    animation: none;
+    color: hsl(107 100% 43% / 0.3);
+    text-shadow:
+        1px 3px 3px hsl(107 100% 38% / 0.2),
+        2px 6px 6px hsl(107 100% 28% / 0.1);
+    cursor: pointer;
 }
 .screen p {
     font-family: 'Google Sans Flex';
@@ -94,13 +211,14 @@ section.main {
         1px 3px 3px hsl(107 100% 38% / 0.6),
         2px 6px 6px hsl(107 100% 28% / 0.2);
 }
-.screen p .blink {
+.screen p span {
     animation: blink 2s step-end infinite;
 }
 
-/* ---------------------------------- frame ---------------------------------- */
+/* ---------------------------------- buttons ---------------------------------- */
 
 .buttons {
+    position: relative;
     display: grid;
     align-items: center;
     height: 500px;
@@ -123,12 +241,16 @@ section.main {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
+    box-shadow:
+        1px 3px 2px 1px hsl(23 10% 15% / 0.5),
+        2px 6px 3px hsl(23 10% 10% / 0.2);
     transition: box-shadow 0.15s var(--ease-in), transform 0.15s var(--ease-in);
 }
 .num-button {
     background-color: hsl(23 10% 20% / 0.9);
     border: 2px solid hsl(23 10% 25% / 0.6);
     box-shadow:
+        1px 3px 2px 1px hsl(23 10% 15% / 0.5) inset,
         1px 3px 2px 1px hsl(23 10% 15% / 0.5),
         2px 6px 3px hsl(23 10% 10% / 0.2);
 }
@@ -136,6 +258,7 @@ section.main {
     background-color: hsl(23 80% 48%);
     border: 2px solid hsl(23 80% 63% / 0.6);
     box-shadow:
+        1px 3px 2px 1px hsl(23 10% 15% / 0.5) inset,
         1px 3px 2px 1px hsl(23 80% 15% / 0.5),
         2px 6px 3px hsl(23 80% 10% / 0.2);
 }
@@ -143,6 +266,7 @@ section.main {
     background-color: hsl(23 10% 50% / 0.9);
     border: 2px solid hsl(23 10% 55% / 0.6);
     box-shadow:
+        1px 3px 2px 1px hsl(23 10% 15% / 0.5) inset,
         1px 3px 2px 1px hsl(23 10% 15% / 0.5),
         2px 6px 3px hsl(23 10% 10% / 0.2);
 }
@@ -154,10 +278,16 @@ section.main {
     cursor: default;
     font-weight: 700;
     font-size: 32px;
+    color: hsl(23 10% 3% / 0.9);
     text-shadow: 0.5px 1.5px 3px hsl(0 0% 0% / 0.6);
     transition: transform 0.25s, text-shadow 0.25s;
     transition-timing-function: var(--ease-in);
 }
+.num-button p {
+    color: hsl(23 10% 53% / 0.9);
+    text-shadow: 1px 3px 3px hsl(0 10% 13% / 0.6);
+}
+
 .special-button.parenthesis p,
 .operator-button.divide p {
     transform: translateY(2px);
@@ -170,6 +300,37 @@ section.main {
     transition-timing-function: var(--ease-out);
 }
 
+.num-button:hover,
+.operator-button:hover,
+.special-button:hover {
+    transform: translateY(-2px);
+    transition: box-shadow 0.15s var(--ease-out), transform 0.01s var(--ease-out);
+}
+.num-button:hover {
+    background-color: hsl(23 10% 20% / 0.9);
+    border: 2px solid hsl(23 10% 25% / 0.6);
+    box-shadow:
+        1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
+        2px 3px 2px 1px hsl(23 10% 15% / 0.5),
+        3px 9px 3px hsl(23 10% 10% / 0.2);
+}
+.operator-button:hover {
+    background-color: hsl(23 80% 48%);
+    border: 2px solid hsl(23 80% 63% / 0.6);
+    box-shadow:
+        1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
+        2px 3px 2px 1px hsl(23 80% 15% / 0.5),
+        3px 9px 3px hsl(23 80% 10% / 0.2);
+}
+.special-button:hover {
+    background-color: hsl(23 10% 50% / 0.9);
+    border: 2px solid hsl(23 10% 55% / 0.6);
+    box-shadow:
+        1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
+        2px 3px 2px 1px hsl(23 10% 15% / 0.5),
+        3px 9px 3px hsl(23 10% 10% / 0.2);
+}
+
 .num-button:active,
 .operator-button:active,
 .special-button:active {
@@ -177,13 +338,19 @@ section.main {
     transition: box-shadow 0.1s var(--ease-out), transform 0.01s var(--ease-out);
 }
 .num-button:active {
-    box-shadow: 1px 3px 1.5px hsl(23 10% 20% / 0.3);
+    box-shadow:
+    3px 9px 9px 1px hsl(23 100% 0% / 0.5) inset,
+    1px 3px 1.5px hsl(23 10% 20% / 0.3);
 }
 .operator-button:active {
-    box-shadow: 1px 3px 1.5px hsl(23 10% 20% / 0.3);
+    box-shadow:
+    3px 9px 9px 1px hsl(23 100% 0% / 0.5) inset,
+    1px 3px 1.5px hsl(23 10% 20% / 0.3);
 }
 .special-button:active {
-    box-shadow: 1px 3px 1.5px hsl(23 10% 20% / 0.3);
+    box-shadow:
+    3px 9px 9px 1px hsl(23 100% 0% / 0.5) inset,
+    1px 3px 1.5px hsl(23 10% 20% / 0.3);
 }
 
 .num-button:active h1,
@@ -195,17 +362,24 @@ section.main {
 .special-button.delete svg {
     width: 48px;
     height: 48px;
+    filter: drop-shadow(0.5px 1.5px 3px hsl(0 0% 0% / 0.4));
     fill: none;
-    stroke: currentColor;
+    stroke: hsl(23 10% 3% / 0.9);
     stroke-width: 3px;
     stroke-linecap: round;
     stroke-linejoin: round;
     will-change: auto;
-    transition: transform 0.25s var(--ease-in);
+    transition: transform 0.15s var(--ease-in), filter 0.15s var(--ease-in);
 }
-.special-button.d
-.special-button.delete:hover svg g {
-    transform: translate(0px, 4px);
+.special-button.delete:hover svg {
+    transform: translate(-4px, 0px);
+    filter: drop-shadow(1px 3px 3px hsl(0 0% 0% / 0.4));
+    transition: transform 0.15s var(--ease-out), stroke 0.15s;
+}
+.special-button.delete:active svg {
+    transform: translate(0px, 0px);
+    stroke: hsl(23 10% 3% / 0.6);
+    transition: transform 0.15s var(--ease-out) 0.1s;
 }
 
 
@@ -296,4 +470,56 @@ section.main {
 
 @keyframes blink {
     50% { opacity: 0;}
+}
+
+@keyframes os {
+    10% {
+        filter: blur(0.5px);
+        color: hsl(107 100% 43% / 0.3);
+        text-shadow:
+            1px 3px 3px hsl(107 100% 38% / 0.2),
+            2px 6px 6px hsl(107 100% 28% / 0.1);
+    }
+    30% {
+        filter: blur(0.5px);
+        color: hsl(107 100% 43% / 0.4);
+        text-shadow:
+            1px 3px 3px hsl(107 100% 38% / 0.3),
+            2px 6px 6px hsl(107 100% 28% / 0.2);
+    }
+    40% {
+        filter: blur(0.7px);
+        color: hsl(107 100% 43% / 0.6);
+        text-shadow:
+            1px 3px 3px hsl(107 100% 38% / 0.4),
+            2px 6px 6px hsl(107 100% 28% / 0.3);
+    }
+    57% {
+        filter: blur(0.3px);
+        color: hsl(107 100% 43% / 0.2);
+        text-shadow:
+            1px 3px 3px hsl(107 100% 38% / 0.1),
+            2px 6px 6px hsl(107 100% 28% / 0.05);
+    }
+    69% {
+        filter: blur(0.6px);
+        color: hsl(107 100% 43% / 0.4);
+        text-shadow:
+            1px 3px 3px hsl(107 100% 38% / 0.3),
+            2px 6px 6px hsl(107 100% 28% / 0.3);
+    }
+    83% {
+        filter: blur(0.7px);
+        color: hsl(107 100% 43% / 0.1);
+        text-shadow:
+            1px 3px 3px hsl(107 100% 38% / 0.1),
+            2px 6px 6px hsl(107 100% 28% / 0.01);
+    }
+    90% {
+        filter: blur(0.5px);
+        color: hsl(107 100% 43% / 0.3);
+        text-shadow:
+            1px 3px 3px hsl(107 100% 38% / 0.2),
+            2px 6px 6px hsl(107 100% 28% / 0.1);
+    }
 }
