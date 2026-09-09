@@ -1,10 +1,25 @@
+// This contains the code written up until Tuesday September 8th, 7pm 2026.
+// I was trying to write the solving code myself but I ended up using eval() because it was too difficult.
+// I saved this file so I can come back and look at my approach when I was a beginner.
+
+/*
+let previousQuery1 = [];
+let previousQuery2 = [];
+let previousQuery3 = [];
+
 let query = [];
 let stringQuery;
 let answer = '';
 
+let operatorMap = {
+    "+": (a, b) => a + b,
+    "-": (a, b) => a - b,
+    "*": (a, b) => a * b,
+    "/": (a, b) => a / b
+};
+
 let numButtons = [];
 let firstNum = true;
-let newLine = false;
 
 let parenthesis = 'left';
 
@@ -41,22 +56,13 @@ function positiveNegative() {
 };
 
 function updateScreen(value) {
-    if (value === "answer") {
-        input.textContent += ' ' + answer;
-    }
-    if (value === "clear") {
+    if (value === 'clear') {
         input.innerHTML = "Awaiting Input<span>:</span>"
     } else if (input.textContent === "Awaiting Input:" && value !== "delete") {
         input.textContent = value;
-    } else if (value !== "delete" && value !== "answer") {
-        if (typeof value === "number") {
-            input.textContent += value;
-        } else if (typeof value === "string" && value === ".") {
-            input.textContent += value;
-        } else if (typeof value === "string") {
-            input.textContent += ' ' + value + ' ';
-        };
-    } else if (value === "delete" && input.textContent !== "Awaiting Input:") {
+    } else if (value !== "delete") {
+        input.textContent += ' ' + value;
+    } else if (value === 'delete' && input.textContent !== "Awaiting Input:") {
         input.textContent = stringQuery.slice(0, -2);
         if (input.textContent.length === 0) {
             input.innerHTML = "Awaiting Input<span>:</span>";
@@ -65,62 +71,83 @@ function updateScreen(value) {
     stringQuery = doc.querySelector(".input").textContent;
 };
 
-
+*/
 /* --------------------------------- solving -------------------------------- */
+/*
+let operatorOrder = [["("], [")"], ["*"], ["/"], ["+"], ["-"]];
 
-function solveQuery() {
-    answer = eval(stringQuery);
+function getOperatorOrder(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === "(") {
+            operatorOrder[0].push(i);
+        }
+        if (arr[i] === ")") {
+            operatorOrder[1].push(i);
+        }
+        if (arr[i] === "*") {
+            operatorOrder[2].push(i);
+        }
+        if (arr[i] === "/") {
+            operatorOrder[3].push(i);
+        }
+        if (arr[i] === "+") {
+            operatorOrder[4].push(i);
+        }
+        if (arr[i] === "-") {
+            operatorOrder[5].push(i);
+        }
+    }
 }
 
-/* ------------------------------ adding new p ------------------------------ */
+function solveQuery(arr) {
+    getOperatorOrder(stringQuery);
+    console.log(operatorOrder);
+    for (let i = 0; i < arr.length; i++) {
+        if (operatorOrder[0].length === 1) {
 
-function addNewInput() {
-    doc.querySelector(".screen .input").classList.remove("input");
-    const el = doc.createElement("p");
-    el.classList.add("input");
-    el.innerHTML = "Awaiting Input<span>:</span>";
-    p = doc.querySelector(".screen").appendChild(el);
-    input = doc.querySelector(".input");
-    newLine = false;
+        } else if (operatorOrder[0].length > 1) {
+            operatorOrder[0][]
+        }
+    }
 }
 
+
+
+*/
 /* ------------------------------ detect input ------------------------------ */
+/*
 
 numButtons.forEach(button => {
     button.onclick = () => {
-        let val = button.dataset.num === "." ? "." : Number(button.dataset.num);
+        let val = button.dataset.num;
         let numArr = [];
-        if (newLine === true) {
-            addNewInput()
-        }
         if (firstNum === true) {
-            numArr.push(val === '.' ? '.' : val);
+            numArr.push(val === '.' ? '.' : Number(val));
             query.push(numArr);
             firstNum = false;
         } else if (firstNum === false) {
-            query[query.length - 1].push(val === '.' ? '.' : val);
+            query[query.length - 1].push(val === '.' ? '.' : Number(val));
         };
-        updateScreen(val);
+        console.log(query);
+        updateScreen(button.dataset.num);
     };
 });
 
 operatorButtons.forEach(button => {
     button.onclick = () => {
         if (button === doc.querySelector(".equals")) {
+            solveQuery(query);
             getTotalNumber(query);
-            solveQuery();
-            updateScreen(button.dataset.num);
-            updateScreen("answer");
+            solveQuery(query)
+            console.log(query);
             query = [];
-            answer = [];
-            stringQuery = "";
-            newLine = true;
         } else {
             let operatorArray = [button.dataset.num];
             query.push(operatorArray);
-            updateScreen(button.dataset.num);
         };
         firstNum = true;
+        console.log(query);
+        updateScreen(button.dataset.num);
     };
 });
 
@@ -131,10 +158,7 @@ specialButtons.forEach(button => {
             updateScreen("delete");
         } else if (button === doc.querySelector(".clear")) {
             query = [];
-            answer = [];
-            stringQuery = "";
             firstNum = true;
-            newLine = false;
             parenthesis = 'left';
             updateScreen("clear");
         } else if (button === doc.querySelector(".parenthesis")) {
@@ -158,6 +182,7 @@ specialButtons.forEach(button => {
         } else if (button === doc.querySelector("positive-negative")) {
 
         };
+        console.log(query);
     };
 })
 
@@ -168,3 +193,4 @@ doc.querySelector(".screen p").onclick = () => {
     doc.querySelector(".screen p").classList.remove("starting");
     doc.querySelector(".screen p").classList.toggle("os");
 };
+*/
