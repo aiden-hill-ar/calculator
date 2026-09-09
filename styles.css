@@ -57,10 +57,10 @@ section.main {
 .calculator {
     display: flex;
     flex-wrap: wrap;
+    flex-grow: 1;
     justify-content: center;
-    height: fit-content;
-    width: 500px;
-    margin-bottom: 20px;
+    max-width: 500px;
+    margin: 0 5px 20px;
 }
 
 .screen,
@@ -296,44 +296,47 @@ section.main {
 .operator-button.divide p {
     transform: translateY(2px);
 }
-.num-button:hover p,
-.operator-button:hover p,
-.special-button:hover p {
-    transform: translateY(0px);
-    text-shadow: 1.8px 5.5px 3px hsl(0 0% 0% / 0.5);
-    transition-timing-function: var(--ease-out);
+@media (hover: hover) {
+    .num-button:hover p,
+    .operator-button:hover p,
+    .special-button:hover p {
+        transform: translateY(0px);
+        text-shadow: 1.8px 5.5px 3px hsl(0 0% 0% / 0.5);
+        transition-timing-function: var(--ease-out);
+    }
+
+    .num-button:hover,
+    .operator-button:hover,
+    .special-button:hover {
+        transform: translateY(-2px);
+        transition: box-shadow 0.15s var(--ease-out), transform 0.01s var(--ease-out);
+    }
+    .num-button:hover {
+        background-color: hsl(23 10% 20% / 0.9);
+        border: 2px solid hsl(23 10% 25% / 0.6);
+        box-shadow:
+            1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
+            2px 3px 2px 1px hsl(23 10% 15% / 0.5),
+            3px 9px 3px hsl(23 10% 10% / 0.2);
+    }
+    .operator-button:hover {
+        background-color: hsl(23 80% 48%);
+        border: 2px solid hsl(23 80% 63% / 0.6);
+        box-shadow:
+            1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
+            2px 3px 2px 1px hsl(23 80% 15% / 0.5),
+            3px 9px 3px hsl(23 80% 10% / 0.2);
+    }
+    .special-button:hover {
+        background-color: hsl(23 10% 50% / 0.9);
+        border: 2px solid hsl(23 10% 55% / 0.6);
+        box-shadow:
+            1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
+            2px 3px 2px 1px hsl(23 10% 15% / 0.5),
+            3px 9px 3px hsl(23 10% 10% / 0.2);
+    }
 }
 
-.num-button:hover,
-.operator-button:hover,
-.special-button:hover {
-    transform: translateY(-2px);
-    transition: box-shadow 0.15s var(--ease-out), transform 0.01s var(--ease-out);
-}
-.num-button:hover {
-    background-color: hsl(23 10% 20% / 0.9);
-    border: 2px solid hsl(23 10% 25% / 0.6);
-    box-shadow:
-        1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
-        2px 3px 2px 1px hsl(23 10% 15% / 0.5),
-        3px 9px 3px hsl(23 10% 10% / 0.2);
-}
-.operator-button:hover {
-    background-color: hsl(23 80% 48%);
-    border: 2px solid hsl(23 80% 63% / 0.6);
-    box-shadow:
-        1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
-        2px 3px 2px 1px hsl(23 80% 15% / 0.5),
-        3px 9px 3px hsl(23 80% 10% / 0.2);
-}
-.special-button:hover {
-    background-color: hsl(23 10% 50% / 0.9);
-    border: 2px solid hsl(23 10% 55% / 0.6);
-    box-shadow:
-        1.5px 4.5px 3px 1px hsl(23 100% 0% / 0.2) inset,
-        2px 3px 2px 1px hsl(23 10% 15% / 0.5),
-        3px 9px 3px hsl(23 10% 10% / 0.2);
-}
 
 .num-button:active,
 .operator-button:active,
@@ -468,6 +471,64 @@ section.main {
 .special-button.positive-negative {
     grid-row: 5 / 6;
     grid-column: 1 / 2;
+}
+
+/* --------------------------------- @media --------------------------------- */
+
+@media screen and (width <= 650px) {
+    .infinity-title {
+        transform: translateX(-290px);
+    }
+}
+@media screen and (width <= 500px) {
+    .buttons {
+        height: fit-content;
+        grid-template: repeat(5, 80px) / repeat(4, 1fr);
+    }
+    .num-button,
+    .operator-button,
+    .special-button {
+        height: 70px;
+        width: 70px;
+    }
+    .num-button p,
+    .operator-button p,
+    .special-button p {
+        font-size: 32px;
+    }
+}
+@media screen and (width <= 400px) {
+    .calculator {
+        margin-bottom: 30px;
+    }
+    .buttons {
+        height: fit-content;
+        grid-template: repeat(5, 70px) / repeat(4, 1fr);
+    }
+    .num-button,
+    .operator-button,
+    .special-button {
+        height: 65px;
+        width: 65px;
+    }
+    .num-button p,
+    .operator-button p,
+    .special-button p {
+        font-size: 28px;
+    }
+}
+@media screen and (width <= 360px) {
+    .num-button,
+    .operator-button,
+    .special-button {
+        height: 55px;
+        width: 55px;
+    }
+    .num-button p,
+    .operator-button p,
+    .special-button p {
+        font-size: 24px;
+    }
 }
 
 /* ------------------------------- animations ------------------------------- */

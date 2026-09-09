@@ -168,3 +168,5 @@ doc.querySelector(".screen p").onclick = () => {
     doc.querySelector(".screen p").classList.remove("starting");
     doc.querySelector(".screen p").classList.toggle("os");
 };
+
+doc.addEventListener("touchstart", function() {}, false);
