@@ -42,7 +42,7 @@ body {
 .squiggly-line {
     height: 100px;
     max-width: 2000px;
-    background-image: url("./svg/squiggly-line.svg");
+    background-image: url("../svg/squiggly-line.svg");
     background-size: auto 100px;
     background-repeat: no-repeat;
 }
