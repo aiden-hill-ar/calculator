@@ -143,8 +143,7 @@ section.main {
     position: relative;
     display: flex;
     flex-flow: column;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: hidden;
     border-top-left-radius: 10px;
     background:
     repeating-linear-gradient(
@@ -340,25 +339,33 @@ section.main {
 
 .num-button:active,
 .operator-button:active,
-.special-button:active {
+.special-button:active,
+.num-button.pressed,
+.operator-button.pressed,
+.special-button.pressed {
     transform: translateY(4px);
     transition: box-shadow 0.1s var(--ease-out), transform 0.01s var(--ease-out);
 }
-.num-button:active {
+.num-button:active,
+.num-button.pressed {
     box-shadow:
     3px 9px 9px 1px hsl(23 100% 0% / 0.5) inset,
     1px 3px 1.5px hsl(23 10% 20% / 0.3);
 }
-.operator-button:active {
+.operator-button:active,
+.operator-button.pressed {
     box-shadow:
     3px 9px 9px 1px hsl(23 100% 0% / 0.5) inset,
     1px 3px 1.5px hsl(23 10% 20% / 0.3);
 }
-.special-button:active {
+.special-button:active,
+.special-button.pressed {
     box-shadow:
     3px 9px 9px 1px hsl(23 100% 0% / 0.5) inset,
     1px 3px 1.5px hsl(23 10% 20% / 0.3);
 }
+
+
 
 .num-button:active h1,
 .operator-button:active h1,
@@ -587,4 +594,8 @@ section.main {
             1px 3px 3px hsl(107 100% 38% / 0.2),
             2px 6px 6px hsl(107 100% 28% / 0.1);
     }
+}
+
+@view-transition {
+    navigation: auto;
 }

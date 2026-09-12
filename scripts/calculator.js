@@ -47,7 +47,13 @@ function positiveNegative(arr) {
             last.unshift("-");
             updateScreen("add negative");
         }
+    } else {
+        let firstNegative = ["-"];
+        arr.unshift(firstNegative);
+        updateScreen("add first negative");
+        firstNum = false;
     }
+    console.log(arr)
 };
 
 function updateScreen(value) {
@@ -60,9 +66,9 @@ function updateScreen(value) {
         input.textContent = previousAnswer;
     } else if (value === "clear") {
         input.innerHTML = "Awaiting Input<span>:</span>"
-    } else if (input.textContent === "Awaiting Input:" && value !== "delete") {
+    } else if (input.textContent === "Awaiting Input:" && value !== "delete" && value !== "add first negative") {
         input.textContent = value;
-    } else if (value !== "delete" && value !== "answer" && value !== "remove negative" && value !== "add negative") {
+    } else if (value !== "delete" && value !== "answer" && value !== "remove negative" && value !== "add negative" && value !== "add first negative") {
         if (typeof value === "number") {
             input.textContent += value;
         } else if (typeof value === "string" && value === ".") {
@@ -83,6 +89,9 @@ function updateScreen(value) {
         stringQuery = stringQuery.slice(0, lastSpace) + "-" + stringQuery.slice(lastSpace);
         input.textContent = input.textContent.slice(0, lastSpace) + "-" + input.textContent.slice(lastSpace);
         console.log(stringQuery);
+    } else if (value === "add first negative") {
+        stringQuery = "-"
+        input.textContent = "-"; // this part isn't working
     } else if (value === "remove negative") {
         stringQuery = stringQuery.slice(0, lastSpace) + stringQuery.slice(lastSpace + 1);
         input.textContent = input.textContent.slice(0, lastSpace) + input.textContent.slice(lastSpace + 1);
@@ -100,20 +109,20 @@ function checkOperatorSyntax(arr, opValue) {
         }
     }
     if (query.length === 0) {
-        if (opValue[0] === "+") {
-            if (previousAnswer > 0) {
+        if (opValue === "+") {
+            if (previousAnswer !== 0) {
                 updateScreen("previous answer");
             }
-        } else if (opValue[0] === "-") {
-            if (previousAnswer > 0) {
+        } else if (opValue === "-") {
+            if (previousAnswer !== 0) {
                 updateScreen("previous answer");
             }
-        } else if (opValue[0] === "*") {
-            if (previousAnswer > 0) {
+        } else if (opValue === "*") {
+            if (previousAnswer !== 0) {
                 updateScreen("previous answer");
             }
-         } else if (opValue[0] === "/") {
-            if (previousAnswer > 0) {
+         } else if (opValue === "/") {
+            if (previousAnswer !== 0) {
                 updateScreen("previous answer");
             }
         }
@@ -177,7 +186,7 @@ operatorButtons.forEach(button => {
             newLine = true;
         } else {
             let operatorArray = [button.dataset.num];
-            checkOperatorSyntax(query, operatorArray);
+            checkOperatorSyntax(query, button.dataset.num);
             query.push(operatorArray);
             updateScreen(button.dataset.num);
         };
@@ -227,42 +236,20 @@ specialButtons.forEach(button => {
 
 /* ----------------------- dectecting keyboard presses ---------------------- */
 
-let keyCodes = {
-    48: "0",
-    49: "1",
-    50: "2",
-    51: "3",
-    52: "4",
-    53: "5",
-    54: "6",
-    55: "7",
-    56: "8",
-    57: "9",
-    88: "*",
-    187: "=",
-    13: "=",
-    189: "-",
-    191: "/",
-    78: "positive-negative",
-    27: "clear",
-    8: "delete",
-    190: "."
-}
-
 let holdShift = false;
+let currentHeldKey;
+let correspondingButton;
 
-// for all keys
 doc.addEventListener("keydown", e => {
     logKey(e);
-    let key = keyCodes[e.keyCode];
-    if (key === 187 && holdShift === true) {
-        console.log("+");
-    } else if (key) {
-        console.log(key);
-    }
+    correspondingButton = doc.querySelector(`[data-num="${currentHeldKey}"]`);
+    correspondingButton.classList.add("pressed");
 });
-// for shift
-doc.addEventListener("keyup", logUp);
+doc.addEventListener("keyup", e => {
+    logUp(e);
+    correspondingButton = doc.querySelector(`[data-num="${currentHeldKey}"]`);
+    correspondingButton.classList.remove("pressed");
+});
 
 function logKey(e) {
     if (e.keyCode === 16) {
@@ -279,53 +266,47 @@ function logUp(e) {
 }
 
 function decodeInput(key) {
-    let decodedKey;
-    if (key >= 48 && key <= 57) {
-        decodedKey = key - 48;
-        sendInput(decodedKey);
-    } else if (decodedKey === 9 && holdShift === true) {
-        decodedKey = "(";
-        sendOpInput(decodedKey);
-    } else if (decodedKey === 0 && holdShift === true) {
-        decodedKey = ")";
-        sendOpInput(decodedKey);
-    } else if (key === 88) {
-        decodedKey = "*";
-        sendOpInput(decodedKey);
+    currentHeldKey;
+    if (key === 57 && holdShift === true) {
+        currentHeldKey = "(";
+        sendOpInput(currentHeldKey);
+    } else if (key === 48 && holdShift === true) {
+        currentHeldKey = ")";
+        sendOpInput(currentHeldKey);
+    } else if (key >= 48 && key <= 57) {
+        currentHeldKey = key - 48;
+        sendInput(currentHeldKey);
+    }  else if (key === 88) {
+        currentHeldKey = "*";
+        sendOpInput(currentHeldKey);
     } else if (key === 187 && holdShift === false) {
-        decodedKey = "=";
-        sendOpInput(decodedKey);
+        currentHeldKey = "=";
+        sendOpInput(currentHeldKey);
     } else if (key === 13) {
-        decodedKey = "=";
-        sendOpInput(decodedKey);
+        currentHeldKey = "=";
+        sendOpInput(currentHeldKey);
     } else if (key === 187 && holdShift === true) {
-        decodedKey = "+";
-        sendOpInput(decodedKey);
+        currentHeldKey = "+";
+        sendOpInput(currentHeldKey);
     } else if (key === 189 && holdShift === false) {
-        decodedKey = "-";
-        sendOpInput(decodedKey);
+        currentHeldKey = "-";
+        sendOpInput(currentHeldKey);
     } else if (key === 191) {
-        decodedKey = "/";
-        sendOpInput(decodedKey);
+        currentHeldKey = "/";
+        sendOpInput(currentHeldKey);
     } else if (key === 27) {
-        decodedKey = "clear";
-        sendSpecialInput(decodedKey);
+        currentHeldKey = "clear";
+        sendSpecialInput(currentHeldKey);
     } else if (key === 8) {
-        decodedKey = "delete";
-        sendSpecialInput(decodedKey);
+        currentHeldKey = "delete";
+        sendSpecialInput(currentHeldKey);
     } else if (key === 78) {
-        decodedKey = "positive-negative";
-        sendSpecialInput(decodedKey);
+        currentHeldKey = "positive-negative";
+        sendSpecialInput(currentHeldKey);
     } else if (key === 190) {
-        decodedKey = ".";
-        sendInput(decodedKey);
+        currentHeldKey = ".";
+        sendInput(currentHeldKey);
     }
-    animateButton(decodedKey);
-}
-
-function animateButton(key) {
-    doc.addEventListener("keydown", logKey);
-    doc.addEventListener("keyup", logUp);
 }
 
 function sendInput(key) {
@@ -346,7 +327,7 @@ function sendInput(key) {
 function sendOpInput(key) {
     if (newLine === true) {
             addNewInput()
-        }
+    }
     if (key === "=") {
         getTotalNumber(query);
         solveQuery();
@@ -363,6 +344,9 @@ function sendOpInput(key) {
         query.push(operatorArray);
         updateScreen(key);
     };
+    if (key === "(" || key === ")") {
+        currentHeldKey = "parenthesis";
+    }
     firstNum = true;
 }
 

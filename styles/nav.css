@@ -1,0 +1,79 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Hanuman;
+}
+
+:root {
+    --ease-out: cubic-bezier(0.506, -0.006, 0, 0.998);
+    --ease-in: cubic-bezier(0.998, -0.006, 0.504, 1.001);
+}
+
+a {
+    color: black;
+
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 30px;
+    border: 3px solid hsl(23 40% 10% / 0.6);
+    backdrop-filter: blur(10px);
+    background-color: hsl(23 50% 48% / 0.6);
+    box-shadow: 
+        0.3px 0.5px 0.7px hsl(23 30% 25% / 0.36),
+        0.8px 1.6px 2px -0.8px hsl(23 30% 25% / 0.36),
+        2.1px 4.1px 5.2px -1.7px hsl(23 30% 25% / 0.36),
+        5px 10px 12.6px -2.5px hsl(23 30% 25% / 0.36);
+}
+
+
+
+nav svg {
+    box-sizing: content-box;
+    width: 36px;
+    height: 36px;
+    margin: 0 10px;
+    padding: 5px 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+nav .selected,
+nav .icon-holder {
+    position: relative;
+    width: fit-content;
+    height: 46px;
+    padding: 0 10px;
+    border-radius: 30px;
+    background-color: none;
+    transition: background-color 0.2s var(--ease-in), transform 0.2s var(--ease-in);
+}
+nav .icon-holder:hover {
+    background-color: hsl(23 40% 10% / 0.2);
+    transition: background-color 0.2s var(--ease-out);
+}
+nav .selected::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: hsl(23 40% 10% / 0.6);
+    border-radius: 30px;
+    transform: translateX(var(--pull-x));
+    transition: transform 0.2s linear;
+}
+
+@view-transition {
+    navigation: auto;
+}

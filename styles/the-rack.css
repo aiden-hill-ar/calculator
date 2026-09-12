@@ -2,9 +2,15 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
+   font-family: Hanuman;
 }
 
 .title {
+   width: fit-content;
+   margin: auto;
    font-size: 64px;
-   width: 36.75px;
+}
+
+@view-transition {
+    navigation: auto;
 }
